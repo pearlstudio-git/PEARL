@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PEARL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              pearl: '#F6F7F8',
+              graphite: '#1E1F22',
+              mist: '#8E9399',
+            },
+            fontFamily: {
+              sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'Inter', 'sans-serif'],
+            },
+            transitionTimingFunction: {
+              'physics': 'cubic-bezier(0.22, 1, 0.36, 1)',
+              'material': 'cubic-bezier(0.4, 0, 0.2, 1)',
+              'fluid': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            },
+            transitionDuration: {
+              '400': '400ms',
+              '700': '700ms',
+              '1000': '1000ms',
+              '2000': '2000ms',
+              '3000': '3000ms',
+              '5000': '5000ms',
+            },
+            letterSpacing: {
+              'tight-head': '-0.02em',
+            },
+            animation: {
+              'fade-in': 'fadeIn 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards',
+              'fade-out': 'fadeOut 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(6px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeOut: {
+                '0%': { opacity: '1' },
+                '100%': { opacity: '0' },
+              },
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      :root {
+        --nacre-strength: 1;
+      }
+
+      body {
+        /* Remove background here to let the system layer show through */
+        background-color: transparent;
+        color: #1E1F22;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        margin: 0;
+      }
+      
+      input {
+        caret-color: #1E1F22;
+      }
+      ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+      }
+
+      /* --- NACRE SYSTEM --- */
+      
+      #nacre-system {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        /* LAYER 1: BASE SOLID */
+        background-color: #F6F7F8;
+      }
+
+      /* LAYER 2: TEXTURE IMAGE (The Physical Surface) */
+      #nacre-system::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.5; /* Balanced texture visibility */
+        background-image: url("https://img.freepik.com/photos-gratuite/fond-texture-abstraite_23-2151897935.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        /* Blend mode multiply ensures the dark parts of the texture sit on the pearl white background */
+        mix-blend-mode: multiply;
+        /* High contrast to create sharp ridges for the light to catch on */
+        filter: grayscale(100%) contrast(1.1) brightness(1.1);
+      }
+
+      /* LAYER 3: IRIDESCENT ATMOSPHERE (Purple/Blue Lighting) */
+      #nacre-system::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        z-index: 2;
+        opacity: 0.6; /* Increased opacity for richer iridescence */
+        
+        /* 
+           Complex gradient stack mimicking iridescent light interference:
+           - Base: Conic spectrum focusing on Purples (Lavender/Indigo) and Blues (Cyan/Sky).
+           - Overlay: Soft radial highlights to create "pools" of light.
+        */
+        background: 
+            radial-gradient(circle at 30% 30%, rgba(224, 231, 255, 0.4), transparent 50%),
+            conic-gradient(
+                from 190deg at 50% 50%,
+                #E3F2FD 0deg,    /* Soft Sky Blue */
+                #F3E5F5 50deg,   /* Pale Lavender */
+                #E1F5FE 100deg,  /* Icy Cyan */
+                #EDE7F6 160deg,  /* Deep Purple Mist */
+                #E8EAF6 220deg,  /* Indigo Tint */
+                #FCE4EC 280deg,  /* Subtle Pink highlight */
+                #E3F2FD 360deg
+            );
+            
+        /* Overlay blending creates the "glow" effect on top of the texture */
+        mix-blend-mode: overlay; 
+        /* Heavy blur to diffuse the colors into an atmosphere */
+        filter: blur(90px);
+        
+        /* Fluid, non-linear atmospheric movement */
+        animation: nacre-atmosphere 45s ease-in-out infinite alternate;
+      }
+
+      @keyframes nacre-atmosphere {
+        0% {
+            transform: translate(-5%, -5%) rotate(0deg) scale(1);
+        }
+        33% {
+             transform: translate(2%, 4%) rotate(3deg) scale(1.05);
+        }
+        66% {
+             transform: translate(-3%, 8%) rotate(-2deg) scale(1.02);
+        }
+        100% {
+            transform: translate(5%, -2%) rotate(2deg) scale(1.1);
+        }
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
